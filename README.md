@@ -82,15 +82,16 @@ nonce: A whitelist for specific inline scripts using a cryptographic nonce (numb
 Let's take an example of a CSP in a webpage https://www.bhaveshthakur.com and see how it works:
 
 ```
-Content-Security-Policy: default-src 'self'; script-src https://bhaveshthakur.com; report-uri /Report-parsing-url;
-<img src=image.jpg>
+<b>Content-Security-Policy</b>: default-src 'self'; script-src https://bhaveshthakur.com; report-uri /Report-parsing-url;
 
-This image will be allowed as image is loading from same domain i.e. bhaveshthakur.com
-<script src=script.js> This script will be allowed as the script is loading from the same domain i.e. bhaveshthakur.com
-<script src=https://evil.com/script.js> This script will not-allowed as the script is trying to load from undefined domain i.e. evil.com
-"/><script>alert(1337)</script> This will not-allowed on the page. 
-But why? Because inline-src is set to self. But Wait! where the hell it is mentioned? I can't see inline-src defined in above CSP at all.
-The answer is have you noticed default-src 'self'? So even other directives are not defined but they will be following default-src directive value only. Below is the list of directives which will follow default-src value even though they are not defined in the policy:
+<img src=image.jpg> : This image will be allowed as image is loading from same domain i.e. bhaveshthakur.com
+<script src=script.js> : This script will be allowed as the script is loading from the same domain i.e. bhaveshthakur.com
+<script src=https://evil.com/script.js>  : This script will not-allowed as the script is trying to load from undefined domain i.e. evil.com
+"/><script>alert(1337)</script> : This will not-allowed on the page. But why? Because inline-src is set to self. But Wait! where the hell it is mentioned? I can't see inline-src defined in above CSP at all. The answer is have you noticed default-src 'self'? So even other directives are not defined but they will be following default-src directive value only.
+```
+Below is the list of directives which will follow default-src value even though they are not defined in the policy:
+
+```
 child-src connect-src font-src frame-src img-src manifest-src
 media-src object-src prefetch-src script-src script-src-elem
 script-src-attr style-src style-src-elem style-src-attr worker-src
