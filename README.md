@@ -23,56 +23,67 @@ If you are a developer you will require to define all allowed origins for every 
 
 Now you may have a question that what are **default-src**,**img-src**, **style-src** and **script-src** . These are directives of CSP. Using directives only content policy can be properly implemented. Below is the list of some common CSP directives:
 
-```**script-src** : This directive specifies allowed sources for JavaScript. This includes not only URLs loaded directly into <script> elements, but also things like inline script event handlers (onclick) and XSLT stylesheets which can trigger script execution.
+```
 
-**default-src**: This directive defines the policy for fetching resources by default. When fetch directives are absent in CSP header the browser follows this directive by default.
+script-src : This directive specifies allowed sources for JavaScript. This includes not only URLs loaded directly into <script> elements, but also things like inline script event handlers (onclick) and XSLT stylesheets which can trigger script execution.
 
-**Child-src**: This directive defines allowed resources for web workers and embedded frame contents.
+default-src: This directive defines the policy for fetching resources by default. When fetch directives are absent in CSP header the browser follows this directive by default.
 
-**connect-src**: This directive restricts URLs to load using interfaces like <a>,fetch,websocket,XMLHttpRequest
+Child-src: This directive defines allowed resources for web workers and embedded frame contents.
 
-**frame-src**: This directive restricts URLs to which frames can be called out.
+connect-src: This directive restricts URLs to load using interfaces like <a>,fetch,websocket,XMLHttpRequest
 
-**frame-ancestors**: This directive specifies the sources that can embed the current page. This directive applies to <frame>, <iframe>, <embed>, and <applet> tags. This directive can't be used in <meta> tags and applies only to non-HTML resources.
+frame-src: This directive restricts URLs to which frames can be called out.
 
-**img-src**: It defines allowed sources to load images on the web page.
+frame-ancestors: This directive specifies the sources that can embed the current page. This directive applies to <frame>, <iframe>, <embed>, and <applet> tags. This directive can't be used in <meta> tags and applies only to non-HTML resources.
 
-**Manifest-src**: This directive defines allowed sources of application manifest files.
+img-src: It defines allowed sources to load images on the web page.
 
-**media-src**: It defines allowed sources from where media objects like <audio>,<video> and <track> can be loaded.
+Manifest-src: This directive defines allowed sources of application manifest files.
 
-**object-src**: It defines allowed sources for the <object>,<embed> and <applet> elements.
+media-src: It defines allowed sources from where media objects like <audio>,<video> and <track> can be loaded.
 
-**base-uri**: It defines allowed URLs which can be loaded using <base> element.
+object-src: It defines allowed sources for the <object>,<embed> and <applet> elements.
 
-**form-action**: This directive lists valid endpoints for submission from <form> tags.
+base-uri: It defines allowed URLs which can be loaded using <base> element.
 
-**plugin-types**: It defineslimits the kinds of mime types a page may invoke.
+form-action: This directive lists valid endpoints for submission from <form> tags.
+
+plugin-types: It defineslimits the kinds of mime types a page may invoke.
 
 **upgrade-insecure-requests**: This directive instructs browsers to rewrite URL schemes, changing HTTP to HTTPS. This directive can be useful for websites with large numbers of old URL's that need to be rewritten.
 
-**sandbox**: sandbox directive enables a sandbox for the requested resource similar to the <iframe> sandbox attribute. It applies restrictions to a page's actions including preventing popups, preventing the execution of plugins and scripts, and enforcing a same-origin policy.
-Sources: Sources are nothing but the defined directives values. Below are some common sources that are used to define the value of the above directives.```
+sandbox: sandbox directive enables a sandbox for the requested resource similar to the <iframe> sandbox attribute. It applies restrictions to a page's actions including preventing popups, preventing the execution of plugins and scripts, and enforcing a same-origin policy.
+Sources: Sources are nothing but the defined directives values. 
+
+```
+Below are some common sources that are used to define the value of the above directives. 
+
+```
    
-   **\***: This allows any URL except data: blob: filesystem: schemes
+   *: This allows any URL except data: blob: filesystem: schemes
 
-**self** : This source defines that loading of resources on the page is  allowed from the same domain.
+self : This source defines that loading of resources on the page is  allowed from the same domain.
 
-**data**: This source allows loading resources via the data scheme (eg Base64 encoded images)
+data: This source allows loading resources via the data scheme (eg Base64 encoded images)
 
-**none**: This directive allows nothing to be loaded from any source.
+none: This directive allows nothing to be loaded from any source.
 
-**unsafe-eval** : This allows the use of eval() and similar methods for creating code from strings. This is not a safe practice to include this source in any directive. For the same reason it is named as unsafe. 
+unsafe-eval : This allows the use of eval() and similar methods for creating code from strings. This is not a safe practice to include this source in any directive. For the same reason it is named as unsafe. 
 
-**unsafe-hashes**: This allows to enable specific inline event handlers.
+unsafe-hashes: This allows to enable specific inline event handlers.
 
-**unsafe-inline**: This allows the use of inline resources, such as inline <script> elements, javascript: URLs, inline event handlers, and inline <style> elements. Again this is not recommended for security reasons.
+unsafe-inline: This allows the use of inline resources, such as inline <script> elements, javascript: URLs, inline event handlers, and inline <style> elements. Again this is not recommended for security reasons.
 
-**nonce**: A whitelist for specific inline scripts using a cryptographic nonce (number used once). The server must generate a unique nonce value each time it transmits a policy.
+nonce: A whitelist for specific inline scripts using a cryptographic nonce (number used once). The server must generate a unique nonce value each time it transmits a policy.
+
+``` 
+
 Let's take an example of a CSP in a webpage https://www.bhaveshthakur.com and see how it works:
 
-```Content-Security-Policy: default-src 'self'; script-src https://bhaveshthakur.com; report-uri /Report-parsing-url;
-<img src=image.jpg>```
+```
+Content-Security-Policy: default-src 'self'; script-src https://bhaveshthakur.com; report-uri /Report-parsing-url;
+<img src=image.jpg>
 
 This image will be allowed as image is loading from same domain i.e. bhaveshthakur.com
 <script src=script.js> This script will be allowed as the script is loading from the same domain i.e. bhaveshthakur.com
@@ -83,9 +94,14 @@ The answer is have you noticed default-src 'self'? So even other directives are 
 child-src connect-src font-src frame-src img-src manifest-src
 media-src object-src prefetch-src script-src script-src-elem
 script-src-attr style-src style-src-elem style-src-attr worker-src
+```
+
 We have a fair understanding of content security policy directives and its resources. There is one more important thing we need to know. Whenever CSP restricts any invalid source to load data it can report about the incident to website administrators if below directive is defined in the policy:
+```
 Content-Security-Policy: default-src 'self'; img-src https://*; child-src 'none'; report-uri /Report-parsing-url;
-Administrators can track which kind of attack scripts or techniques are used by attackers to load malicious content from untrusted resources. Now, let's move to the interesting part Bypassing Techniques:
+
+```
+Administrators can track which kind of attack scripts or techniques are used by attackers to load malicious content from untrusted resources. Now, let's move to the interesting part **Bypassing Techniques**:
 Analyze the CSP policy properly. There are few online tools that are very helpful.
 1. https://csp-evaluator.withgoogle.com/
 2. https://cspvalidator.org/
