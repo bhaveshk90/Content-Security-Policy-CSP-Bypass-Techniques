@@ -51,7 +51,7 @@ form-action: This directive lists valid endpoints for submission from <form> tag
 
 plugin-types: It defineslimits the kinds of mime types a page may invoke.
 
-**upgrade-insecure-requests**: This directive instructs browsers to rewrite URL schemes, changing HTTP to HTTPS. This directive can be useful for websites with large numbers of old URL's that need to be rewritten.
+upgrade-insecure-requests: This directive instructs browsers to rewrite URL schemes, changing HTTP to HTTPS. This directive can be useful for websites with large numbers of old URL's that need to be rewritten.
 
 sandbox: sandbox directive enables a sandbox for the requested resource similar to the <iframe> sandbox attribute. It applies restrictions to a page's actions including preventing popups, preventing the execution of plugins and scripts, and enforcing a same-origin policy.
 Sources: Sources are nothing but the defined directives values. 
@@ -82,7 +82,7 @@ nonce: A whitelist for specific inline scripts using a cryptographic nonce (numb
 Let's take an example of a CSP in a webpage https://www.bhaveshthakur.com and see how it works:
 
 ```
-<b>Content-Security-Policy</b>: default-src 'self'; script-src https://bhaveshthakur.com; report-uri /Report-parsing-url;
+<pre><b>Content-Security-Policy</b></pre>: default-src 'self'; script-src https://bhaveshthakur.com; report-uri /Report-parsing-url;
 
 <img src=image.jpg> : This image will be allowed as image is loading from same domain i.e. bhaveshthakur.com
 <script src=script.js> : This script will be allowed as the script is loading from the same domain i.e. bhaveshthakur.com
