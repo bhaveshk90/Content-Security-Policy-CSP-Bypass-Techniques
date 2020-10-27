@@ -178,7 +178,7 @@ we can see object-src is set to none but yes this CSP can be bypassed too to per
 ```
 Content-Security-Policy: script-src 'self' https://www.google.com; object-src 'none' ; report-uri /Report-parsing-url;
 ```
-In such scenarios where script-src is set to self and a particular domain which is whitelisted, it can be bypassed using jsonp. jsonp endpoints allow insecure callback methods which allow an attacker to perform xss.
+In such scenarios where script-src is set to self and a particular domain which is whitelisted, it can be bypassed using [jsonp](https://github.com/zigoo0/JSONBee). jsonp endpoints allow insecure callback methods which allow an attacker to perform xss.
 
 **working payload** :
 ```
@@ -213,7 +213,7 @@ Content-Security-Policy: script-src 'self' ajax.googleapis.com; object-src 'none
 
 ```
 
-If the application is using angular JS and scripts are loaded from a whitelisted domain. It is possible to bypass this CSP policy by calling callback functions and vulnerable class. For more details visit this awesome git repo.
+If the application is using angular JS and scripts are loaded from a whitelisted domain. It is possible to bypass this CSP policy by calling callback functions and vulnerable class. For more details visit this awesome [git](https://github.com/cure53/XSSChallengeWiki/wiki/H5SC-Minichallenge-3:-%22Sh*t,-it's-CSP!%22) repo.
 
 **working payloads** :
 ```
