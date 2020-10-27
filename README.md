@@ -253,7 +253,7 @@ THE above CSP policy can be bypassed using iframes. The condition is that applic
 ```
 Special thanks to @mikispag & @we1x for their contribution to Google Security research in the domain of Content Security Policy secure implementation.
 
-#Thank You!#
+# Thank You!
 
 
 For any feedback or suggestions reach out to me @Bhavesh_Thakur_
