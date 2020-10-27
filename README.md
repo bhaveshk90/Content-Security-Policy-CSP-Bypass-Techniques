@@ -53,17 +53,28 @@ Now you may have a question that what are **default-src**,**img-src**, **style-s
 
 **sandbox**: sandbox directive enables a sandbox for the requested resource similar to the <iframe> sandbox attribute. It applies restrictions to a page's actions including preventing popups, preventing the execution of plugins and scripts, and enforcing a same-origin policy.
 Sources: Sources are nothing but the defined directives values. Below are some common sources that are used to define the value of the above directives.
-   \* : This allows any URL except data: blob: filesystem: schemes
-self : This source defines that loading of resources on the page is  allowed from the same domain.
-data: This source allows loading resources via the data scheme (eg Base64 encoded images)
-none: This directive allows nothing to be loaded from any source.
-unsafe-eval : This allows the use of eval() and similar methods for creating code from strings. This is not a safe practice to include this source in any directive. For the same reason it is named as unsafe. 
-unsafe-hashes: This allows to enable specific inline event handlers.
-unsafe-inline: This allows the use of inline resources, such as inline <script> elements, javascript: URLs, inline event handlers, and inline <style> elements. Again this is not recommended for security reasons.
-nonce: A whitelist for specific inline scripts using a cryptographic nonce (number used once). The server must generate a unique nonce value each time it transmits a policy.
+   
+   **\***: This allows any URL except data: blob: filesystem: schemes
+
+**self** : This source defines that loading of resources on the page is  allowed from the same domain.
+
+**data**: This source allows loading resources via the data scheme (eg Base64 encoded images)
+
+**none**: This directive allows nothing to be loaded from any source.
+
+**unsafe-eval** : This allows the use of eval() and similar methods for creating code from strings. This is not a safe practice to include this source in any directive. For the same reason it is named as unsafe. 
+
+**unsafe-hashes**: This allows to enable specific inline event handlers.
+
+**unsafe-inline**: This allows the use of inline resources, such as inline <script> elements, javascript: URLs, inline event handlers, and inline <style> elements. Again this is not recommended for security reasons.
+
+**nonce**: A whitelist for specific inline scripts using a cryptographic nonce (number used once). The server must generate a unique nonce value each time it transmits a policy.
 Let's take an example of a CSP in a webpage https://www.bhaveshthakur.com and see how it works:
-Content-Security-Policy: default-src 'self'; script-src https://bhaveshthakur.com; report-uri /Report-parsing-url;
-<img src=image.jpg> This image will be allowed as image is loading from same domain i.e. bhaveshthakur.com
+
+```Content-Security-Policy: default-src 'self'; script-src https://bhaveshthakur.com; report-uri /Report-parsing-url;
+<img src=image.jpg>```
+
+This image will be allowed as image is loading from same domain i.e. bhaveshthakur.com
 <script src=script.js> This script will be allowed as the script is loading from the same domain i.e. bhaveshthakur.com
 <script src=https://evil.com/script.js> This script will not-allowed as the script is trying to load from undefined domain i.e. evil.com
 "/><script>alert(1337)</script> This will not-allowed on the page. 
