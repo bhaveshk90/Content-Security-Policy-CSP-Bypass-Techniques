@@ -23,7 +23,7 @@ If you are a developer you will require to define all allowed origins for every 
 
 Now you may have a question that what are **default-src**,**img-src**, **style-src** and **script-src** . These are directives of CSP. Using directives only content policy can be properly implemented. Below is the list of some common CSP directives:
 
-**script-src** : This directive specifies allowed sources for JavaScript. This includes not only URLs loaded directly into <script> elements, but also things like inline script event handlers (onclick) and XSLT stylesheets which can trigger script execution.
+```**script-src** : This directive specifies allowed sources for JavaScript. This includes not only URLs loaded directly into <script> elements, but also things like inline script event handlers (onclick) and XSLT stylesheets which can trigger script execution.
 
 **default-src**: This directive defines the policy for fetching resources by default. When fetch directives are absent in CSP header the browser follows this directive by default.
 
@@ -52,7 +52,7 @@ Now you may have a question that what are **default-src**,**img-src**, **style-s
 **upgrade-insecure-requests**: This directive instructs browsers to rewrite URL schemes, changing HTTP to HTTPS. This directive can be useful for websites with large numbers of old URL's that need to be rewritten.
 
 **sandbox**: sandbox directive enables a sandbox for the requested resource similar to the <iframe> sandbox attribute. It applies restrictions to a page's actions including preventing popups, preventing the execution of plugins and scripts, and enforcing a same-origin policy.
-Sources: Sources are nothing but the defined directives values. Below are some common sources that are used to define the value of the above directives.
+Sources: Sources are nothing but the defined directives values. Below are some common sources that are used to define the value of the above directives.```
    
    **\***: This allows any URL except data: blob: filesystem: schemes
 
