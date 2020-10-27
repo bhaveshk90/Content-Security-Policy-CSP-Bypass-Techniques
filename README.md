@@ -82,7 +82,7 @@ nonce: A whitelist for specific inline scripts using a cryptographic nonce (numb
 Let's take an example of a CSP in a webpage https://www.bhaveshthakur.com and see how it works:
 
 ```
-<pre><b>Content-Security-Policy</b></pre>: default-src 'self'; script-src https://bhaveshthakur.com; report-uri /Report-parsing-url;
+Content-Security-Policy: default-src 'self'; script-src https://bhaveshthakur.com; report-uri /Report-parsing-url;
 
 <img src=image.jpg> : This image will be allowed as image is loading from same domain i.e. bhaveshthakur.com
 <script src=script.js> : This script will be allowed as the script is loading from the same domain i.e. bhaveshthakur.com
@@ -107,7 +107,7 @@ Analyze the CSP policy properly. There are few online tools that are very helpfu
 1. https://csp-evaluator.withgoogle.com/
 2. https://cspvalidator.org/
 Below is the screenshot of how they evaluate and provide you results.
-Image for post
+![Scenario 1](https://miro.medium.com/max/1400/1*UqmPG_15m90O6glKsTdvXw.png)
 Scenario : 1
 Content-Security-Policy: script-src https://facebook.com https://google.com 'unsafe-inline' https://*; child-src 'none'; report-uri /Report-parsing-url;
 By observing this policy we can say it's damn vulnerable and will allow inline scripting as well . The reason behind that is the usage of unsafe-inline source as a value of script-src directive.
