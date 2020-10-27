@@ -53,7 +53,7 @@ Now you may have a question that what are **default-src**,**img-src**, **style-s
 
 **sandbox**: sandbox directive enables a sandbox for the requested resource similar to the <iframe> sandbox attribute. It applies restrictions to a page's actions including preventing popups, preventing the execution of plugins and scripts, and enforcing a same-origin policy.
 Sources: Sources are nothing but the defined directives values. Below are some common sources that are used to define the value of the above directives.
-   * : This allows any URL except data: blob: filesystem: schemes
+   \* : This allows any URL except data: blob: filesystem: schemes
 self : This source defines that loading of resources on the page is  allowed from the same domain.
 data: This source allows loading resources via the data scheme (eg Base64 encoded images)
 none: This directive allows nothing to be loaded from any source.
