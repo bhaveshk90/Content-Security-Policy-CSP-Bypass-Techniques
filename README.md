@@ -1,6 +1,8 @@
 # Content-Security-Policy-CSP-Bypass-Techniques
 Content-Security-Policy (CSP) Bypass Techniques
 
+![Scenario 1](https://media.giphy.com/media/Skx32VOazLRMk/giphy.gif)
+
 # What is a CSP ?
 CSP stands for Content Security Policy which is a mechanism to define which resources can be fetched out or executed by a web page. In other words, it can be understood as a policy that decides which scripts, images, iframes can be called or executed on a particular page from different locations. Content Security Policy is implemented via response headers or meta elements of the HTML page. From there, it’s browser’s call to follow that policy and actively block violations as they are detected.
 
@@ -104,8 +106,12 @@ Content-Security-Policy: default-src 'self'; img-src https://*; child-src 'none'
 ```
 Administrators can track which kind of attack scripts or techniques are used by attackers to load malicious content from untrusted resources. Now, let's move to the interesting part **Bypassing Techniques**:
 Analyze the CSP policy properly. There are few online tools that are very helpful.
+```
 1. https://csp-evaluator.withgoogle.com/
 2. https://cspvalidator.org/
+
+```
+
 Below is the screenshot of how they evaluate and provide you results.
 ![Scenario 1](https://miro.medium.com/max/1400/1*UqmPG_15m90O6glKsTdvXw.png)
 Scenario : 1
